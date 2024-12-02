@@ -15,7 +15,6 @@ const TEST: &str = "\
 fn main() -> Result<()> {
     start_day(DAY);
 
-    //region Part 1
     println!("=== Part 1 ===");
 
     fn part1<R: BufRead>(reader: R) -> Result<usize> {
@@ -30,9 +29,7 @@ fn main() -> Result<()> {
     let input_file = BufReader::new(File::open(INPUT_FILE)?);
     let result = time_snippet!(part1(input_file)?);
     println!("Result = {}", result);
-    //endregion
 
-    //region Part 2
     // println!("\n=== Part 2 ===");
     //
     // fn part2<R: BufRead>(reader: R) -> Result<usize> {
@@ -44,7 +41,6 @@ fn main() -> Result<()> {
     // let input_file = BufReader::new(File::open(INPUT_FILE)?);
     // let result = time_snippet!(part2(input_file)?);
     // println!("Result = {}", result);
-    //endregion
 
     Ok(())
 }
