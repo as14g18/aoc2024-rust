@@ -1,10 +1,10 @@
+use adv_code_2024::*;
 use anyhow::*;
+use code_timing_macros::time_snippet;
+use const_format::concatcp;
 use std::collections::HashMap;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
-use code_timing_macros::time_snippet;
-use const_format::concatcp;
-use adv_code_2024::*;
 
 const DAY: &str = "01";
 const INPUT_FILE: &str = concatcp!("input/", DAY, ".txt");
@@ -51,7 +51,7 @@ fn main() -> Result<()> {
     println!("Result = {}", result);
 
     println!("\n=== Part 2 ===");
-    
+
     fn part2<R: BufRead>(reader: R) -> Result<i32> {
         let mut left: Vec<i32> = Vec::new();
         let mut right_counter: HashMap<i32, i32> = HashMap::new();
@@ -59,7 +59,10 @@ fn main() -> Result<()> {
             let line = line_res.unwrap();
             let mut parts = line.split_whitespace();
             left.push(parts.next().unwrap().parse::<i32>().unwrap());
-            right_counter.entry(parts.next().unwrap().parse::<i32>().unwrap()).and_modify(|counter| *counter += 1).or_insert(1);
+            right_counter
+                .entry(parts.next().unwrap().parse::<i32>().unwrap())
+                .and_modify(|counter| *counter += 1)
+                .or_insert(1);
         }
 
         let mut answer = 0;
@@ -71,9 +74,9 @@ fn main() -> Result<()> {
 
         Ok(answer)
     }
-    
+
     assert_eq!(31, part2(BufReader::new(TEST.as_bytes()))?);
-    
+
     let input_file = BufReader::new(File::open(INPUT_FILE)?);
     let result = time_snippet!(part2(input_file)?);
     println!("Result = {}", result);

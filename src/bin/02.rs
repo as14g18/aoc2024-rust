@@ -1,9 +1,9 @@
+use adv_code_2024::*;
 use anyhow::*;
-use std::fs::File;
-use std::io::{BufRead, BufReader};
 use code_timing_macros::time_snippet;
 use const_format::concatcp;
-use adv_code_2024::*;
+use std::fs::File;
+use std::io::{BufRead, BufReader};
 
 const DAY: &str = "02";
 const INPUT_FILE: &str = concatcp!("input/", DAY, ".txt");
@@ -52,7 +52,10 @@ fn main() -> Result<()> {
     fn part1<R: BufRead>(reader: R) -> Result<i32> {
         let mut answer = 0;
         for line in reader.lines().map(|res| res.unwrap()) {
-            let nums: Vec<i32> = line.split_whitespace().map(|token| token.parse::<i32>().unwrap()).collect();
+            let nums: Vec<i32> = line
+                .split_whitespace()
+                .map(|token| token.parse::<i32>().unwrap())
+                .collect();
             if is_safe(&nums) {
                 answer += 1;
             }
@@ -68,11 +71,14 @@ fn main() -> Result<()> {
     println!("Result = {}", result);
 
     println!("\n=== Part 2 ===");
-    
+
     fn part2<R: BufRead>(reader: R) -> Result<i32> {
         let mut answer = 0;
         for line in reader.lines().map(|res| res.unwrap()) {
-            let nums: Vec<i32> = line.split_whitespace().map(|token| token.parse::<i32>().unwrap()).collect();
+            let nums: Vec<i32> = line
+                .split_whitespace()
+                .map(|token| token.parse::<i32>().unwrap())
+                .collect();
             if is_safe(&nums) {
                 answer += 1;
             } else {
@@ -90,9 +96,9 @@ fn main() -> Result<()> {
 
         Ok(answer)
     }
-    
+
     assert_eq!(4, part2(BufReader::new(TEST.as_bytes()))?);
-    
+
     let input_file = BufReader::new(File::open(INPUT_FILE)?);
     let result = time_snippet!(part2(input_file)?);
     println!("Result = {}", result);

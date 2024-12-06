@@ -1,10 +1,10 @@
+use adv_code_2024::*;
 use anyhow::*;
+use code_timing_macros::time_snippet;
+use const_format::concatcp;
 use regex::Regex;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
-use code_timing_macros::time_snippet;
-use const_format::concatcp;
-use adv_code_2024::*;
 
 const DAY: &str = "03";
 const INPUT_FILE: &str = concatcp!("input/", DAY, ".txt");
@@ -41,7 +41,7 @@ fn main() -> Result<()> {
     println!("Result = {}", result);
 
     println!("\n=== Part 2 ===");
-    
+
     fn part2<R: BufRead>(reader: R) -> Result<i32> {
         let hay = reader.lines().flatten().next().unwrap();
         let re = Regex::new(r"(mul\((\d+),(\d+)\)|do\(\)|don't\(\))").unwrap();
@@ -55,7 +55,10 @@ fn main() -> Result<()> {
                 } else if match_.as_str() == "don't()" {
                     enabled = false;
                 } else if enabled {
-                    muls.push((caps.get(2).unwrap().as_str().parse::<i32>().unwrap(), caps.get(3).unwrap().as_str().parse::<i32>().unwrap()));
+                    muls.push((
+                        caps.get(2).unwrap().as_str().parse::<i32>().unwrap(),
+                        caps.get(3).unwrap().as_str().parse::<i32>().unwrap(),
+                    ));
                 }
             }
         }
@@ -67,9 +70,9 @@ fn main() -> Result<()> {
 
         Ok(answer)
     }
-    
+
     assert_eq!(48, part2(BufReader::new(TEST.as_bytes()))?);
-    
+
     let input_file = BufReader::new(File::open(INPUT_FILE)?);
     let result = time_snippet!(part2(input_file)?);
     println!("Result = {}", result);
